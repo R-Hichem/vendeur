@@ -13,6 +13,7 @@ import Confirm from './components/Confirm';
 import Historique from './components/Historique';
 import UniqueOrderLogs from './components/UniqueOrderLogs';
 import Settings from './components/Settings';
+import Sucess from './components/Sucess';
 
 const Stack = createStackNavigator();
 
@@ -116,6 +117,14 @@ const MainStack = () => {
       <Stack.Screen
         name="Confirm"
         component={Confirm}
+        options={{
+          header: () => null,
+        }}
+      />
+
+      <Stack.Screen
+        name="Sucess"
+        component={Sucess}
         options={{
           header: () => null,
         }}

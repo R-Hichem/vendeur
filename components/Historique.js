@@ -24,12 +24,14 @@ const Historique = ({navigation}) => {
       .catch(error => {
         setOrdersLoading(false);
         console.log('orders Error', error);
+        //console.error(error.toJSON());
       });
   }, []);
+
   return (
     <Container>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Commandes</Text>
+        <Text style={styles.headerText}>Historique</Text>
       </View>
       <Body style={{width: '100%'}}>
         <SearchBar />

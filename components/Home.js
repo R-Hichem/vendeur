@@ -10,6 +10,8 @@ import Echo from 'laravel-echo';
 import {baseURL} from './baseURL';
 import Pusher from 'pusher-js/react-native';
 
+Pusher.logToConsole = true;
+
 const Home = ({navigation}) => {
   const {user, logout, setLoading, loading} = useContext(AuthContext);
   // const echo = new Echo({
@@ -67,6 +69,7 @@ const Home = ({navigation}) => {
   //   console.log(e.message);
   // });
   // useEffect(() => {}, []);
+
   return (
     <Container>
       <View style={styles.header}>

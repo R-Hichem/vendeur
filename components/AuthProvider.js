@@ -28,6 +28,7 @@ export const AuthProvider = ({children}) => {
               device_name: 'mobile',
             })
             .then(response => {
+              console.log(response);
               setLoading(false);
               const userResponse = {
                 id: response.data.user.id,
@@ -41,6 +42,7 @@ export const AuthProvider = ({children}) => {
               console.log(JSON.stringify(userResponse));
             })
             .catch(error => {
+              console.log(error);
               setLoading(false);
               const key = Object.keys(error.response.data.errors)[0];
               setError(error.response.data.errors[key][0]);

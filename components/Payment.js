@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,9 @@ import {
 import {baseURL} from './baseURL';
 import {AuthContext} from './AuthProvider';
 import axios from 'axios';
+import Pusher from 'pusher-js/react-native';
+
+Pusher.logToConsole = true;
 axios.defaults.baseURL = baseURL;
 
 const Payment = ({route, navigation}) => {
@@ -30,6 +33,19 @@ const Payment = ({route, navigation}) => {
   const [ready, setReady] = useState(false);
   const [qrImage, setQrImage] = useState(null);
   const {order_id} = route.params;
+
+  useEffect(() => {
+    var pusher = new Pusher('5b69251d720b9bf9763b', {
+      cluster: 'eu',
+    });
+
+    var channel = pusher.subscribe('transactions-channel');
+    channel.bind('transactions-event', function(data) {
+      // alert(JSON.stringify(data));
+      navigation.navigate('Sucess');
+    });
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -90,17 +106,18 @@ const Payment = ({route, navigation}) => {
         )}
         <View>
           {ready ? (
-            <Button
-              block
-              success
-              style={{margin: 30}}
-              onPress={() => {
-                navigation.navigate('Confirm', {
-                  order_id: order_id,
-                });
-              }}>
-              <Text>Confirmer La Transaction</Text>
-            </Button>
+            // <Button
+            //   block
+            //   success
+            //   style={{margin: 30}}
+            //   onPress={() => {
+            //     navigation.navigate('Confirm', {
+            //       order_id: order_id,
+            //     });
+            //   }}>
+            //   <Text>Confirmer La Transaction</Text>
+            // </Button>
+            <Text>Attente du payement ...</Text>
           ) : null}
         </View>
       </Content>
