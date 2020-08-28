@@ -1,1 +1,1 @@
-export const baseURL = 'http://192.168.1.8';
+export const baseURL = 'https://vendeurwebapp.herokuapp.com';

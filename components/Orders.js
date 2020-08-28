@@ -42,7 +42,7 @@ const Orders = ({navigation}) => {
               padding: 30,
             }}>
             <Text style={{fontSize: 20}}>Mise à jour des informations ...</Text>
-            <Spinner color="blue" size={100} />
+            <Spinner color="#1C6587" size={100} />
           </View>
         ) : (
           <OrdersList navigation={navigation} orders={orders} />
@@ -56,7 +56,7 @@ export default Orders;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#1793d1',
+    backgroundColor: '#1C6587',
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
 
   orderItem: {
-    backgroundColor: '#333333',
+    backgroundColor: 'white',
     marginVertical: 5,
     padding: 15,
     paddingHorizontal: 30,
@@ -78,10 +78,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
   },
 
   orderItemTitle: {
-    color: 'white',
+    color: '#1C6587',
   },
 
   orderListContainer: {
@@ -96,16 +110,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 10,
   },
 
   searchBarInput: {
     flex: 1,
     backgroundColor: 'white',
-    borderRadius: 30,
     margin: 10,
-    borderColor: '#333333',
-    borderWidth: 3,
+    borderColor: '#1C6587',
+    borderBottomWidth: 3,
     textAlign: 'center',
     fontSize: 20,
   },
@@ -140,7 +153,7 @@ const OrderItem = ({
             <Text
               style={{
                 ...styles.orderItemTitle,
-                color: 'green',
+                color: '#44AF69',
                 fontWeight: 'bold',
                 fontSize: 18,
               }}>
@@ -150,7 +163,7 @@ const OrderItem = ({
             <Text
               style={{
                 ...styles.orderItemTitle,
-                color: 'coral',
+                color: '#F8333C',
                 fontWeight: 'bold',
                 fontSize: 18,
               }}>
@@ -163,7 +176,7 @@ const OrderItem = ({
             <Text
               style={{
                 ...styles.orderItemTitle,
-                color: 'green',
+                color: '#44AF69',
                 fontWeight: 'bold',
                 fontSize: 18,
               }}>
@@ -173,7 +186,7 @@ const OrderItem = ({
             <Text
               style={{
                 ...styles.orderItemTitle,
-                color: 'coral',
+                color: '#F8333C',
                 fontWeight: 'bold',
                 fontSize: 18,
               }}>
@@ -182,10 +195,6 @@ const OrderItem = ({
           )}
         </View>
       </View>
-
-      <Text style={styles.orderItemTitle}>
-        <Icon name="alert-circle" type="Feather" style={{color: 'white'}} />
-      </Text>
     </TouchableOpacity>
   );
 };
@@ -194,7 +203,7 @@ const SearchBar = () => {
   return (
     <View style={styles.searchBar}>
       <TextInput style={styles.searchBarInput} autoFocus={false} />
-      <Icon name="search" type="Feather" style={{color: '#333333'}} />
+      <Icon name="search" type="Feather" style={{color: '#1C6587'}} />
     </View>
   );
 };

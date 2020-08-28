@@ -43,6 +43,7 @@ const Payment = ({route, navigation}) => {
     channel.bind('transactions-event', function(data) {
       // alert(JSON.stringify(data));
       navigation.navigate('Sucess');
+      pusher.disconnect();
     });
   }, []);
 
@@ -50,7 +51,7 @@ const Payment = ({route, navigation}) => {
     <Container>
       <Header>
         <Body>
-          <Text style={styles.titre}>Détaille de Commande</Text>
+          <Text style={styles.titre}>Payement Par Code QR</Text>
         </Body>
       </Header>
       <Content>

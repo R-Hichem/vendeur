@@ -14,6 +14,10 @@ import Historique from './components/Historique';
 import UniqueOrderLogs from './components/UniqueOrderLogs';
 import Settings from './components/Settings';
 import Sucess from './components/Sucess';
+import PaymentOptions from './components/PaymentOptions';
+import ErrorOccured from './components/ErrorOccured';
+import CashPayment from './components/CashPayment';
+import Cheque from './components/Cheque';
 
 const Stack = createStackNavigator();
 
@@ -107,8 +111,32 @@ const MainStack = () => {
       />
 
       <Stack.Screen
+        name="PaymentOptions"
+        component={PaymentOptions}
+        options={{
+          header: () => null,
+        }}
+      />
+
+      <Stack.Screen
         name="Payment"
         component={Payment}
+        options={{
+          header: () => null,
+        }}
+      />
+
+      <Stack.Screen
+        name="CashPayment"
+        component={CashPayment}
+        options={{
+          header: () => null,
+        }}
+      />
+
+      <Stack.Screen
+        name="Cheque"
+        component={Cheque}
         options={{
           header: () => null,
         }}
@@ -125,6 +153,14 @@ const MainStack = () => {
       <Stack.Screen
         name="Sucess"
         component={Sucess}
+        options={{
+          header: () => null,
+        }}
+      />
+
+      <Stack.Screen
+        name="ErrorOccured"
+        component={ErrorOccured}
         options={{
           header: () => null,
         }}

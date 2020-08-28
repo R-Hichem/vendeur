@@ -205,7 +205,7 @@ const SearchBar = () => {
 const OrdersList = ({navigation, orders}) => {
   return (
     <ScrollView style={styles.orderListContainer}>
-      {orders.map(order => {
+      {orders.reverse().map(order => {
         return (
           <OrderItem
             orderID={order.order_id}

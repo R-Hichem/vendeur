@@ -127,17 +127,31 @@ const MainScreen = ({navigation, order, orderID}) => {
         </List>
 
         {order.payed == false ? (
-          <Button
-            block
-            Primary
-            style={{margin: 30}}
-            onPress={() =>
-              navigation.navigate('Payment', {
-                order_id: orderID,
-              })
-            }>
-            <Text>Passer Au payement</Text>
-          </Button>
+          <View>
+            <Button
+              block
+              Primary
+              style={{margin: 30}}
+              onPress={() =>
+                navigation.navigate('PaymentOptions', {
+                  order_id: orderID,
+                  order: order,
+                })
+              }>
+              <Text>Passer Au payement de la commande </Text>
+            </Button>
+            <Button
+              block
+              Primary
+              style={{margin: 30}}
+              onPress={() =>
+                navigation.navigate('Payment', {
+                  order_id: orderID,
+                })
+              }>
+              <Text>Passer Au payement</Text>
+            </Button>
+          </View>
         ) : null}
       </Content>
     </Container>

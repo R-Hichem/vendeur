@@ -14,62 +14,6 @@ Pusher.logToConsole = true;
 
 const Home = ({navigation}) => {
   const {user, logout, setLoading, loading} = useContext(AuthContext);
-  // const echo = new Echo({
-  //   broadcaster: 'pusher',
-  //   key: 'ABCDEFG',
-  //   cluster: 'mt1',
-  //   wsHost: '192.168.8.103',
-  //   wsPort: 6001,
-  // });
-
-  // const pusherConfig = {
-  //   appId: '12345',
-  //   key: 'ABCDEFG',
-  //   secret: 'HIJKLMNOP',
-  //   cluster: 'mt1',
-  //   wsHost: 'e12e8d3eceee.ngrok.io',
-  //   wsPort: 6001,
-  //   logToConsole: true,
-  //   encrypted: true,
-  // };
-
-  // let pusher = new Pusher(pusherConfig.key, pusherConfig);
-  // pusher.connection.bind('state_change', function(states) {
-  //   console.log('Channels current state is ' + states.current);
-  // });
-
-  // pusher.connection.bind('initialized', () =>
-  //   console.log('PusherClient::initialized', arguments),
-  // );
-  // pusher.connection.bind('connecting', () =>
-  //   console.log('PusherClient::connecting', arguments),
-  // );
-  // pusher.connection.bind('connected', () =>
-  //   console.log('PusherClient::connected', arguments),
-  // );
-  // pusher.connection.bind('error', () =>
-  //   console.log('PusherClient::error', arguments),
-  // );
-  // pusher.connection.bind('unavailable', () =>
-  //   console.log('PusherClient::unavailable', arguments),
-  // );
-  // pusher.connection.bind('failed', () =>
-  //   console.log('PusherClient::failed', arguments),
-  // );
-  // pusher.connection.bind('disconnected', () =>
-  //   console.log('PusherClient::disconnected', arguments),
-  // );
-
-  // let echo = new Echo({
-  //   broadcaster: 'pusher',
-  //   client: pusher,
-  // });
-
-  // echo.channel('transactions').listen('TransactionSuccess', e => {
-  //   console.log(e.message);
-  // });
-  // useEffect(() => {}, []);
-
   return (
     <Container>
       <View style={styles.header}>
@@ -89,9 +33,17 @@ const Home = ({navigation}) => {
             screen="Logs"
             navigation={navigation}
           />
+        </View>
+        <View style={styles.homeListContainer}>
           <HomeItem
             title="Paramètres"
             icon="sliders"
+            screen="Settings"
+            navigation={navigation}
+          />
+          <HomeItem
+            title="Notes"
+            icon="edit"
             screen="Settings"
             navigation={navigation}
           />
@@ -103,37 +55,54 @@ const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#1793d1',
+    backgroundColor: '#1C6587',
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
     padding: 20,
+    marginBottom: 25,
   },
 
   headerText: {
     fontSize: 32,
-    color: 'white',
+    color: '#F8F8F8',
+    padding: 25,
   },
 
   homeItem: {
-    backgroundColor: '#333333',
-    margin: 10,
+    //backgroundColor: '#1C6587',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    //flexGrow: 1,
+    margin: 10,
   },
 
   homeItemTitle: {
-    fontSize: 24,
-    padding: 30,
-    color: 'white',
-    paddingVertical: 50,
+    fontSize: 20,
+    //color: 'white',
+    color: '#1C6587',
+    fontWeight: 'bold',
   },
 
   homeListContainer: {
     display: 'flex',
-    width: '100%',
+    width: '50%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    flex: 1,
+  },
+  homeCard: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    height: 160,
+    width: 140,
   },
 });
 
@@ -142,12 +111,36 @@ export default Home;
 const HomeItem = ({title, icon, screen, navigation}) => {
   return (
     <TouchableOpacity
-      style={styles.homeItem}
+      style={{
+        ...styles.homeItem,
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        borderRadius: 15,
+        borderWidth: 7,
+        borderColor: '#1C6587',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+
+        elevation: 8,
+      }}
       onPress={() => navigation.navigate(screen)}>
-      <Text style={styles.homeItemTitle}>{title}</Text>
-      <Text style={styles.homeItemTitle}>
-        <Icon name={icon} type="Feather" style={{color: 'white'}} />
-      </Text>
+      <View style={styles.homeCard}>
+        <Text style={styles.homeItemTitle}> {title}</Text>
+        <Icon
+          name={icon}
+          type="Feather"
+          style={{
+            color: 'white',
+            fontSize: 50,
+            color: '#1C6587',
+          }}
+        />
+      </View>
     </TouchableOpacity>
   );
 };
