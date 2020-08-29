@@ -43,7 +43,9 @@ const Payment = ({route, navigation}) => {
     var channel = pusher.subscribe('transactions-channel');
     channel.bind('transactions-event', function(data) {
       // alert(JSON.stringify(data));
-      navigation.navigate('Sucess');
+      navigation.navigate('Sucess', {
+        message: 'Paiement effectué avec succès',
+      });
       pusher.disconnect();
     });
 

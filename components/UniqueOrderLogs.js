@@ -55,7 +55,7 @@ const UniqueOrderLogs = ({route, navigation}) => {
           padding: 30,
         }}>
         <Text style={{fontSize: 20}}>Chargement des données ...</Text>
-        <Spinner color="blue" size={100} />
+        <Spinner color="#1C6587" size={100} />
       </View>
     );
   }
@@ -73,7 +73,7 @@ export default UniqueOrderLogs;
 
 const styles = StyleSheet.create({
   titre: {
-    fontSize: 22,
+    fontSize: 20,
     color: 'white',
   },
   listItem: {
@@ -81,45 +81,86 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+    marginBottom: 15,
+  },
+
+  headerText: {
+    fontSize: 29,
+    color: 'white',
+  },
+  orderDetailItem: {
+    backgroundColor: 'white',
+    marginVertical: 5,
+    padding: 15,
+    paddingHorizontal: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+  },
 });
 
 const MainScreen = ({navigation, order, orderID, payed_at}) => {
   return (
     <Container style={{backgroundColor: '#F6F6F9'}}>
-      <Header>
-        <Body>
-          <Text style={styles.titre}>Détaille de Commande</Text>
-        </Body>
-      </Header>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Détaille de la commande</Text>
+      </View>
       <Content>
         <List>
-          <ListItem style={styles.listItem}>
-            <Text>Ref Commande</Text>
+          <ListItem style={styles.orderDetailItem}>
+            <Text>Ref </Text>
             <Text>{order.code}</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Au nom de</Text>
             <Text>{order.client_name}</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
-            <Text>Somme à payer</Text>
+          <ListItem style={styles.orderDetailItem}>
+            <Text>Somme payée</Text>
             <Text>{order.ammount} DA</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Etat de livraison</Text>
             {order.shipped == true ? (
-              <Text style={{color: 'green'}}>Livré</Text>
+              <Text style={{color: '#44AF69'}}>Livré</Text>
             ) : (
-              <Text style={{color: 'coral'}}>En cours</Text>
+              <Text style={{color: '#F8333C'}}>En cours</Text>
             )}
           </ListItem>
 
-          <ListItem style={styles.listItem}>
-            <Text>Payé le : </Text>
-            <Text>{payed_at}</Text>
+          <ListItem style={styles.orderDetailItem}>
+            <Text>Payée le : </Text>
+            <Text>
+              {payed_at
+                .split('-')
+                .reverse()
+                .join('/')}
+            </Text>
           </ListItem>
         </List>
 

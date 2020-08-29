@@ -98,7 +98,9 @@ const Cheque = ({route, navigation}) => {
                 })
                 .then(response => {
                   setLoading(false);
-                  navigation.navigate('Sucess');
+                  navigation.navigate('Sucess', {
+                    message: 'Chèque pris en compte',
+                  });
                 })
                 .catch(error => {
                   setLoading(false);

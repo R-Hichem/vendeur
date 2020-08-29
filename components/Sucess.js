@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text, Button, Icon} from 'native-base';
 
-const Sucess = ({navigation}) => {
+const Sucess = ({route, navigation}) => {
+  const {message} = route.params;
   return (
     <View
       style={{
@@ -14,7 +15,7 @@ const Sucess = ({navigation}) => {
         backgroundColor: '#E6E6E6',
       }}>
       <Text style={{fontSize: 20, fontWeight: 'bold', color: '#1C6587'}}>
-        Transaction Enregistré !
+        {message ? message : 'Transaction Enregistré !'}
       </Text>
       <Icon
         name="check-circle"

@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     textAlign: 'center',
     fontSize: 20,
+    backgroundColor: '#F6F6F9',
   },
 });
 

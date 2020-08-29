@@ -107,7 +107,9 @@ const CashPayment = ({route, navigation}) => {
                       })
                       .then(response => {
                         setLoading(false);
-                        navigation.navigate('Sucess');
+                        navigation.navigate('Sucess', {
+                          message: 'Transaction Enregistré !',
+                        });
                       })
                       .catch(error => {
                         setLoading(false);
