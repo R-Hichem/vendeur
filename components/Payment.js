@@ -18,6 +18,7 @@ import {
   Card,
   CardItem,
   Spinner,
+  Icon,
 } from 'native-base';
 
 import {baseURL} from './baseURL';
@@ -45,15 +46,28 @@ const Payment = ({route, navigation}) => {
       navigation.navigate('Sucess');
       pusher.disconnect();
     });
+
+    setQr(!qr);
+    axios
+      .post('/api/orders/issueQR/' + order_id)
+      .then(response => {
+        setQrImage(response.data.data.qr);
+        setReady(true);
+      })
+      .catch(error => {
+        console.log(error);
+        setReady(true);
+      });
   }, []);
 
   return (
     <Container>
-      <Header>
-        <Body>
-          <Text style={styles.titre}>Payement Par Code QR</Text>
-        </Body>
-      </Header>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>
+          Paiement Par Code Qr{' '}
+          <Icon name="qrcode" type="FontAwesome" style={{color: 'white'}} />{' '}
+        </Text>
+      </View>
       <Content>
         {qr ? (
           <Card>
@@ -79,31 +93,40 @@ const Payment = ({route, navigation}) => {
                   <Text style={{padding: 10}}>
                     Traitement de La requète ...
                   </Text>
-                  <Spinner color="blue" size={100} />
+                  <Spinner color="#1C6587" size={100} />
                 </View>
               )}
             </CardItem>
           </Card>
         ) : (
-          <Button
-            block
-            Primary
-            style={{margin: 30}}
-            onPress={() => {
-              setQr(!qr);
-              axios
-                .post('/api/orders/issueQR/' + order_id)
-                .then(response => {
-                  setQrImage(response.data.data.qr);
-                  setReady(true);
-                })
-                .catch(error => {
-                  console.log(error);
-                  setReady(true);
-                });
-            }}>
-            <Text>Recevoir le code Qr</Text>
-          </Button>
+          // <Button
+          //   block
+          //   Primary
+          //   style={{margin: 30}}
+          //   onPress={() => {
+          //     setQr(!qr);
+          //     axios
+          //       .post('/api/orders/issueQR/' + order_id)
+          //       .then(response => {
+          //         setQrImage(response.data.data.qr);
+          //         setReady(true);
+          //       })
+          //       .catch(error => {
+          //         console.log(error);
+          //         setReady(true);
+          //       });
+          //   }}>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 20,
+                padding: 40,
+              }}>
+              Récéption du code Qr ...
+            </Text>
+          </View>
         )}
         <View>
           {ready ? (
@@ -118,7 +141,13 @@ const Payment = ({route, navigation}) => {
             //   }}>
             //   <Text>Confirmer La Transaction</Text>
             // </Button>
-            <Text>Attente du payement ...</Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+              }}>
+              Attente du paiement ...
+            </Text>
           ) : null}
         </View>
       </Content>
@@ -137,5 +166,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+    marginBottom: 25,
+  },
+
+  headerText: {
+    fontSize: 23,
+    color: '#F8F8F8',
+    padding: 25,
   },
 });

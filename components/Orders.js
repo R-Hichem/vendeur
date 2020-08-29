@@ -142,7 +142,9 @@ const OrderItem = ({
         })
       }>
       <View>
-        <Text style={styles.orderItemTitle}>{clientName}</Text>
+        <Text style={{...styles.orderItemTitle, fontWeight: 'bold'}}>
+          {clientName}
+        </Text>
         <Text style={styles.orderItemTitle}>{orderCode}</Text>
         <Text style={styles.orderItemTitle}>{orderDate}</Text>
       </View>

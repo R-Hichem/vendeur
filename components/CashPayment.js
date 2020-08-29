@@ -17,6 +17,7 @@ import {
   Input,
   Button,
   Spinner,
+  Icon,
 } from 'native-base';
 
 import {baseURL} from './baseURL';
@@ -47,14 +48,15 @@ const CashPayment = ({route, navigation}) => {
   }
   return (
     <Container>
-      <Header>
-        <Body>
-          <Text style={styles.titre}>Payement Par Liquide</Text>
-        </Body>
-      </Header>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>
+          Paiement par liquide{' '}
+          <Icon name="dollar-sign" type="Feather" style={{color: 'white'}} />{' '}
+        </Text>
+      </View>
       <Content>
-        <Form style={{padding: 30}}>
-          <Item>
+        <Form style={styles.formTag}>
+          <Item style={styles.inputStyle} success>
             <Input
               placeholder="Nom du client"
               style={{margin: 10}}
@@ -63,7 +65,7 @@ const CashPayment = ({route, navigation}) => {
               }}
             />
           </Item>
-          <Item last>
+          <Item style={styles.inputStyle}>
             <Input
               placeholder="Montant Reçu"
               style={{margin: 10}}
@@ -78,37 +80,60 @@ const CashPayment = ({route, navigation}) => {
         {montantArendre !== null ? (
           parseFloat(montantArendre) >= 0 ? (
             <View>
-              <Text>Montant a rendre : {montantArendre}</Text>
-              <Button
-                block
-                onPress={() => {
-                  setLoading(true);
-                  axios
-                    .post('api/orderswithjson/' + order_id, {
-                      details: JSON.stringify({
-                        type: 'liquide',
-                        detail: {
-                          montan_a_payer: parseFloat(order.ammount),
-                          montan_recu: parseFloat(montant),
-                          montant_rendu: parseFloat(montantArendre),
-                        },
-                      }),
-                    })
-                    .then(response => {
-                      setLoading(false);
-                      navigation.navigate('Sucess');
-                    })
-                    .catch(error => {
-                      setLoading(false);
-                      console.log(error.message);
-                      navigation.navigate('ErrorOccured');
-                    });
+              <Text
+                style={{
+                  textAlign: 'center',
+                  paddingVertical: 30,
+                  fontWeight: 'bold',
                 }}>
-                <Text>Confirmer</Text>
-              </Button>
+                Montant a rendre :{' '}
+                <Text style={{color: '#44AF69'}}>{montantArendre}</Text> DZD
+              </Text>
+              <View>
+                <Button
+                  block
+                  onPress={() => {
+                    setLoading(true);
+                    axios
+                      .post('api/orderswithjson/' + order_id, {
+                        details: JSON.stringify({
+                          type: 'liquide',
+                          detail: {
+                            montan_a_payer: parseFloat(order.ammount),
+                            montan_recu: parseFloat(montant),
+                            montant_rendu: parseFloat(montantArendre),
+                          },
+                        }),
+                      })
+                      .then(response => {
+                        setLoading(false);
+                        navigation.navigate('Sucess');
+                      })
+                      .catch(error => {
+                        setLoading(false);
+                        console.log(error.message);
+                        navigation.navigate('ErrorOccured');
+                      });
+                  }}
+                  style={{
+                    margin: 40,
+                    backgroundColor: '#1C6587',
+                    borderRadius: 8,
+                  }}>
+                  <Text style={{fontWeight: 'bold'}}> Confirmer </Text>
+                </Button>
+              </View>
             </View>
           ) : (
-            <Text>Montant Inssufissant </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                paddingVertical: 30,
+                fontWeight: 'bold',
+                color: '#F8333C',
+              }}>
+              Montant Inssufissant{' '}
+            </Text>
           )
         ) : null}
       </Content>
@@ -127,5 +152,33 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+  },
+
+  headerText: {
+    fontSize: 23,
+    color: '#F8F8F8',
+    padding: 25,
+  },
+  inputStyle: {
+    borderRadius: 5,
+    marginHorizontal: 20,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+    width: '90%',
+    padding: 10,
+  },
+
+  formTag: {
+    alignSelf: 'center',
+    paddingHorizontal: 20,
   },
 });
