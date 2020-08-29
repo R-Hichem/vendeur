@@ -17,6 +17,7 @@ import {
   Input,
   Button,
   Spinner,
+  Icon,
 } from 'native-base';
 
 import {baseURL} from './baseURL';
@@ -40,20 +41,21 @@ const Cheque = ({route, navigation}) => {
           padding: 30,
         }}>
         <Text style={{fontSize: 20}}>Traitement en cours ...</Text>
-        <Spinner color="blue" size={100} />
+        <Spinner color="#1C6587" size={100} />
       </View>
     );
   }
   return (
-    <Container>
-      <Header>
-        <Body>
-          <Text style={styles.titre}>Payement Par Liquide</Text>
-        </Body>
-      </Header>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>
+          Paiement par chèque{' '}
+          <Icon name="edit-3" type="Feather" style={{color: 'white'}} />{' '}
+        </Text>
+      </View>
       <Content>
         <Form style={{padding: 30}}>
-          <Item>
+          <Item style={styles.inputStyle}>
             <Input
               placeholder="Nom du client"
               style={{margin: 10}}
@@ -62,7 +64,7 @@ const Cheque = ({route, navigation}) => {
               }}
             />
           </Item>
-          <Item>
+          <Item style={styles.inputStyle}>
             <Input
               placeholder="Numero compte"
               keyboardType="numeric"
@@ -73,32 +75,40 @@ const Cheque = ({route, navigation}) => {
             />
           </Item>
         </Form>
-        <Button
-          block
-          onPress={() => {
-            setLoading(true);
-            axios
-              .post('api/orderswithjson/' + order_id, {
-                details: JSON.stringify({
-                  type: 'liquide',
-                  detail: {
-                    clientName,
-                    numeroCompte,
-                  },
-                }),
-              })
-              .then(response => {
-                setLoading(false);
-                navigation.navigate('Sucess');
-              })
-              .catch(error => {
-                setLoading(false);
-                console.log(error.message);
-                navigation.navigate('ErrorOccured');
-              });
-          }}>
-          <Text>Confirmer</Text>
-        </Button>
+
+        <View>
+          <Button
+            block
+            style={{
+              margin: 40,
+              backgroundColor: '#1C6587',
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              setLoading(true);
+              axios
+                .post('api/orderswithjson/' + order_id, {
+                  details: JSON.stringify({
+                    type: 'chèque',
+                    detail: {
+                      clientName,
+                      numeroCompte,
+                    },
+                  }),
+                })
+                .then(response => {
+                  setLoading(false);
+                  navigation.navigate('Sucess');
+                })
+                .catch(error => {
+                  setLoading(false);
+                  console.log(error.message);
+                  navigation.navigate('ErrorOccured');
+                });
+            }}>
+            <Text style={{fontWeight: 'bold'}}> Confirmer </Text>
+          </Button>
+        </View>
       </Content>
     </Container>
   );
@@ -115,5 +125,33 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+  },
+
+  headerText: {
+    fontSize: 23,
+    color: '#F8F8F8',
+    padding: 25,
+  },
+  inputStyle: {
+    borderRadius: 5,
+    marginHorizontal: 20,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+    width: '90%',
+    padding: 10,
+  },
+
+  formTag: {
+    alignSelf: 'center',
+    paddingHorizontal: 20,
   },
 });

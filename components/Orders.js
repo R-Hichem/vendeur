@@ -27,7 +27,7 @@ const Orders = ({navigation}) => {
       });
   }, []);
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Commandes</Text>
       </View>

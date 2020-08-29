@@ -15,7 +15,7 @@ Pusher.logToConsole = true;
 const Home = ({navigation}) => {
   const {user, logout, setLoading, loading} = useContext(AuthContext);
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}> {user.name} </Text>
       </View>

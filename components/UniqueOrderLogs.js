@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
 const MainScreen = ({navigation, order, orderID, payed_at}) => {
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <Header>
         <Body>
           <Text style={styles.titre}>Détaille de Commande</Text>

@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
 const MainScreen = ({navigation, order, orderID}) => {
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Détaille de la commande</Text>
       </View>

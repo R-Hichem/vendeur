@@ -21,7 +21,7 @@ const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}>
           Connexion <Icon name="user" type="Feather" style={{color: 'white'}} />{' '}

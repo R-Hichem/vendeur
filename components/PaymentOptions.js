@@ -17,7 +17,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const PaymentOptions = ({route, navigation}) => {
   const {order_id, order} = route.params;
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Options de paiement</Text>
       </View>

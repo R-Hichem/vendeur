@@ -42,12 +42,12 @@ const CashPayment = ({route, navigation}) => {
           padding: 30,
         }}>
         <Text style={{fontSize: 20}}>Traitement en cours ...</Text>
-        <Spinner color="blue" size={100} />
+        <Spinner color="#1C6587" size={100} />
       </View>
     );
   }
   return (
-    <Container>
+    <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
         <Text style={styles.headerText}>
           Paiement par liquide{' '}
