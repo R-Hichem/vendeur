@@ -22,12 +22,11 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
   return (
     <Container>
-      <Header>
-        <Body style={styles.horizentalCenter}>
-          <Text style={styles.titre}>Connexion</Text>
-          <Icon name="user" type="Feather" style={{color: 'white'}} />
-        </Body>
-      </Header>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>
+          Connexion <Icon name="user" type="Feather" style={{color: 'white'}} />{' '}
+        </Text>
+      </View>
       <Content>
         {error ? (
           <Text
@@ -42,7 +41,8 @@ const LoginScreen = ({navigation}) => {
           </Text>
         ) : null}
         <Form style={styles.formTag}>
-          <Item>
+          <Item style={styles.inputStyle}>
+            <Icon active name="mail" style={{color: '#1C6587'}} />
             <Input
               placeholder="E-mail"
               onChangeText={text => {
@@ -51,7 +51,8 @@ const LoginScreen = ({navigation}) => {
               value={email}
             />
           </Item>
-          <Item last>
+          <Item style={styles.inputStyle}>
+            <Icon active name="key" style={{color: '#1C6587'}} />
             <Input
               placeholder="Mot de passe"
               onChangeText={text => {
@@ -66,9 +67,9 @@ const LoginScreen = ({navigation}) => {
         <Button
           block
           Primary
-          style={{margin: 30}}
+          style={{margin: 40, backgroundColor: '#1C6587', borderRadius: 8}}
           onPress={() => login(email, password)}>
-          <Text>Se Connecter ? </Text>
+          <Text style={{fontWeight: 'bold'}}> Connexion </Text>
         </Button>
       </Content>
     </Container>
@@ -99,6 +100,33 @@ const styles = StyleSheet.create({
   },
 
   formTag: {
-    margin: 40,
+    width: 400,
+    marginTop: 10,
+    alignSelf: 'center',
+    paddingHorizontal: 20,
+  },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+    marginBottom: 25,
+  },
+
+  headerText: {
+    fontSize: 32,
+    color: '#F8F8F8',
+    padding: 25,
+  },
+  inputStyle: {
+    borderRadius: 5,
+    marginHorizontal: 20,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+    width: '90%',
+    padding: 10,
   },
 });

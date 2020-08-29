@@ -55,7 +55,7 @@ const UniqueOrder = ({route, navigation}) => {
           padding: 30,
         }}>
         <Text style={{fontSize: 20}}>Chargement des données ...</Text>
-        <Spinner color="blue" size={100} />
+        <Spinner color="#1C6587" size={100} />
       </View>
     );
   }
@@ -72,7 +72,7 @@ export default UniqueOrder;
 
 const styles = StyleSheet.create({
   titre: {
-    fontSize: 22,
+    fontSize: 20,
     color: 'white',
   },
   listItem: {
@@ -80,48 +80,88 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+    marginBottom: 15,
+  },
+
+  headerText: {
+    fontSize: 29,
+    color: 'white',
+  },
+  orderDetailItem: {
+    backgroundColor: 'white',
+    marginVertical: 5,
+    padding: 15,
+    paddingHorizontal: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+  },
 });
 
 const MainScreen = ({navigation, order, orderID}) => {
   return (
     <Container>
-      <Header>
-        <Body>
-          <Text style={styles.titre}>Détaille de Commande</Text>
-        </Body>
-      </Header>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Détaille de la commande</Text>
+      </View>
       <Content>
         <List>
-          <ListItem style={styles.listItem}>
-            <Text>Ref Commande</Text>
+          <ListItem style={styles.orderDetailItem}>
+            <Text>Ref </Text>
             <Text>{order.code}</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Au nom de</Text>
             <Text>{order.client_name}</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Somme à payer</Text>
             <Text>{order.ammount} DA</Text>
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Etat de livraison</Text>
             {order.shipped == true ? (
-              <Text style={{color: 'green'}}>Livré</Text>
+              <Text style={{color: '#44AF69', fontWeight: 'bold'}}>Livré</Text>
             ) : (
-              <Text style={{color: 'coral'}}>En cours</Text>
+              <Text style={{color: '#F8333C', fontWeight: 'bold'}}>
+                En cours
+              </Text>
             )}
           </ListItem>
 
-          <ListItem style={styles.listItem}>
+          <ListItem style={styles.orderDetailItem}>
             <Text>Etat de payement</Text>
             {order.payed == true ? (
-              <Text style={{color: 'green'}}>payé</Text>
+              <Text style={{color: '#44AF69', fontWeight: 'bold'}}>payé</Text>
             ) : (
-              <Text style={{color: 'red'}}>Non payé</Text>
+              <Text style={{color: '#F8333C', fontWeight: 'bold'}}>
+                Non payé
+              </Text>
             )}
           </ListItem>
         </List>
@@ -130,26 +170,14 @@ const MainScreen = ({navigation, order, orderID}) => {
           <View>
             <Button
               block
-              Primary
-              style={{margin: 30}}
+              style={{margin: 40, backgroundColor: '#1C6587', borderRadius: 8}}
               onPress={() =>
                 navigation.navigate('PaymentOptions', {
                   order_id: orderID,
                   order: order,
                 })
               }>
-              <Text>Passer Au payement de la commande </Text>
-            </Button>
-            <Button
-              block
-              Primary
-              style={{margin: 30}}
-              onPress={() =>
-                navigation.navigate('Payment', {
-                  order_id: orderID,
-                })
-              }>
-              <Text>Passer Au payement</Text>
+              <Text style={{fontWeight: 'bold'}}> Options de paiement </Text>
             </Button>
           </View>
         ) : null}
