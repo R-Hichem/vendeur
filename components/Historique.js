@@ -12,6 +12,7 @@ const Historique = ({navigation}) => {
   const [orders, setOrders] = useState([]);
   const [ordersError, setOrderError] = useState(null);
   const [ordersLoading, setOrdersLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const {user} = useContext(AuthContext);
   axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
   useEffect(() => {
@@ -19,7 +20,7 @@ const Historique = ({navigation}) => {
       .post('/api/orders/history')
       .then(response => {
         setOrdersLoading(false);
-        setOrders(response.data.data);
+        setOrders(response.data.data.reverse());
       })
       .catch(error => {
         setOrdersLoading(false);
@@ -34,7 +35,14 @@ const Historique = ({navigation}) => {
         <Text style={styles.headerText}>Historique</Text>
       </View>
       <Body style={{width: '100%'}}>
-        <SearchBar />
+        <View style={styles.searchBar}>
+          <TextInput
+            style={styles.searchBarInput}
+            autoFocus={false}
+            onChangeText={text => setSearchText(text)}
+          />
+          <Icon name="search" type="Feather" style={{color: '#1C6587'}} />
+        </View>
         {ordersLoading ? (
           <View
             style={{
@@ -47,7 +55,11 @@ const Historique = ({navigation}) => {
             <Spinner color="#1C6587" size={100} />
           </View>
         ) : (
-          <OrdersList navigation={navigation} orders={orders} />
+          <OrdersList
+            navigation={navigation}
+            orders={orders}
+            searchText={searchText}
+          />
         )}
       </Body>
     </Container>
@@ -55,76 +67,6 @@ const Historique = ({navigation}) => {
 };
 
 export default Historique;
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#1C6587',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
-    padding: 20,
-  },
-
-  headerText: {
-    fontSize: 32,
-    color: 'white',
-  },
-
-  orderItem: {
-    backgroundColor: 'white',
-    marginVertical: 5,
-    padding: 15,
-    paddingHorizontal: 30,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-
-    elevation: 6,
-    borderRadius: 5,
-    marginHorizontal: 10,
-    borderBottomWidth: 4,
-    borderBottomEndRadius: 5,
-    borderColor: '#1C6587',
-  },
-
-  orderItemTitle: {
-    color: '#1C6587',
-  },
-
-  orderListContainer: {
-    display: 'flex',
-    width: '100%',
-  },
-
-  searchBar: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-
-  searchBarInput: {
-    flex: 1,
-    backgroundColor: 'white',
-    margin: 10,
-    borderColor: '#1C6587',
-    borderBottomWidth: 3,
-    textAlign: 'center',
-    fontSize: 20,
-    backgroundColor: '#F6F6F9',
-  },
-});
 
 const OrderItem = ({
   orderID,
@@ -213,26 +155,117 @@ const SearchBar = () => {
   );
 };
 
-const OrdersList = ({navigation, orders}) => {
+const OrdersList = ({navigation, orders, searchText}) => {
+  let ordersToDisplay = orders;
+  if (searchText !== '') {
+    ordersToDisplay = orders.filter(order =>
+      order.order_object.code.toLowerCase().includes(searchText.toLowerCase()),
+    );
+  }
   return (
     <ScrollView style={styles.orderListContainer}>
-      {orders.reverse().map(order => {
-        return (
-          <OrderItem
-            orderID={order.order_id}
-            orderCode={order.order_object.code}
-            clientName={order.order_object.client_name}
-            orderDate={order.order_object.created_at}
-            status={{
-              order: order.order_object.payed,
-              shipping: order.order_object.shipped,
-            }}
-            navigation={navigation}
-            key={order.order_id}
-            payedAt={order.updated_at}
-          />
-        );
-      })}
+      {ordersToDisplay.length > 0 ? (
+        ordersToDisplay.map((order, index) => {
+          return (
+            <OrderItem
+              orderID={order.order_id}
+              orderCode={order.order_object.code}
+              clientName={order.order_object.client_name}
+              orderDate={order.order_object.created_at}
+              status={{
+                order: order.order_object.payed,
+                shipping: order.order_object.shipped,
+              }}
+              navigation={navigation}
+              key={index}
+              payedAt={order.updated_at}
+            />
+          );
+        })
+      ) : (
+        <Text
+          style={{
+            color: '#F8333C',
+            fontWeight: 'bold',
+            fontSize: 24,
+            textAlign: 'center',
+            padding: 20,
+          }}>
+          {' '}
+          Aucune commande ne corresponds a votre recherche
+        </Text>
+      )}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: '#1C6587',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    padding: 20,
+  },
+
+  headerText: {
+    fontSize: 32,
+    color: 'white',
+  },
+
+  orderItem: {
+    backgroundColor: 'white',
+    marginVertical: 5,
+    padding: 15,
+    paddingHorizontal: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    borderBottomWidth: 4,
+    borderBottomEndRadius: 5,
+    borderColor: '#1C6587',
+  },
+
+  orderItemTitle: {
+    color: '#1C6587',
+  },
+
+  orderListContainer: {
+    display: 'flex',
+    width: '100%',
+  },
+
+  searchBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+
+  searchBarInput: {
+    flex: 1,
+    backgroundColor: 'white',
+    margin: 10,
+    borderColor: '#1C6587',
+    borderBottomWidth: 3,
+    textAlign: 'center',
+    fontSize: 20,
+    backgroundColor: '#F6F6F9',
+  },
+});

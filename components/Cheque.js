@@ -27,7 +27,7 @@ import axios from 'axios';
 axios.defaults.baseURL = baseURL;
 
 const Cheque = ({route, navigation}) => {
-  const [clientName, setClientName] = useState('');
+  //const [clientName, setClientName] = useState('');
   const [numeroCompte, setNumeroCompte] = useState('');
   const [loading, setLoading] = useState(false);
   const {order_id, order} = route.params;
@@ -55,7 +55,7 @@ const Cheque = ({route, navigation}) => {
       </View>
       <Content>
         <Form style={{padding: 30}}>
-          <Item style={styles.inputStyle}>
+          {/* <Item style={styles.inputStyle}>
             <Input
               placeholder="Nom du client"
               style={{margin: 10}}
@@ -63,7 +63,7 @@ const Cheque = ({route, navigation}) => {
                 setClientName(text);
               }}
             />
-          </Item>
+          </Item> */}
           <Item style={styles.inputStyle}>
             <Input
               placeholder="Numero compte"
@@ -91,7 +91,6 @@ const Cheque = ({route, navigation}) => {
                   details: JSON.stringify({
                     type: 'chèque',
                     detail: {
-                      clientName,
                       numeroCompte,
                     },
                   }),

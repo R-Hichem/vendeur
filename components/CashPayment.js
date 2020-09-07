@@ -29,7 +29,7 @@ axios.defaults.baseURL = baseURL;
 const CashPayment = ({route, navigation}) => {
   const [montantArendre, setMontantArendre] = useState(null);
   const [montant, setMontant] = useState(null);
-  const [clientName, setClientName] = useState('');
+  //const [clientName, setClientName] = useState('');
   const [loading, setLoading] = useState(false);
   const {order_id, order} = route.params;
   if (loading) {
@@ -56,7 +56,7 @@ const CashPayment = ({route, navigation}) => {
       </View>
       <Content>
         <Form style={styles.formTag}>
-          <Item style={styles.inputStyle} success>
+          {/* <Item style={styles.inputStyle} success>
             <Input
               placeholder="Nom du client"
               style={{margin: 10}}
@@ -64,7 +64,7 @@ const CashPayment = ({route, navigation}) => {
                 setClientName(text);
               }}
             />
-          </Item>
+          </Item> */}
           <Item style={styles.inputStyle}>
             <Input
               placeholder="Montant Reçu"
