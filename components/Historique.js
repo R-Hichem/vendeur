@@ -159,7 +159,9 @@ const OrdersList = ({navigation, orders, searchText}) => {
   let ordersToDisplay = orders;
   if (searchText !== '') {
     ordersToDisplay = orders.filter(order =>
-      order.order_object.code.toLowerCase().includes(searchText.toLowerCase()),
+      order.order_object.client_name
+        .toLowerCase()
+        .includes(searchText.toLowerCase()),
     );
   }
   return (

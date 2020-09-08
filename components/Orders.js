@@ -12,6 +12,7 @@ const Orders = ({navigation}) => {
   const [orders, setOrders] = useState([]);
   const [ordersError, setOrderError] = useState(null);
   const [ordersLoading, setOrdersLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const {user} = useContext(AuthContext);
   axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
   useEffect(() => {
@@ -32,7 +33,14 @@ const Orders = ({navigation}) => {
         <Text style={styles.headerText}>Commandes</Text>
       </View>
       <Body style={{width: '100%'}}>
-        <SearchBar />
+        <View style={styles.searchBar}>
+          <TextInput
+            style={styles.searchBarInput}
+            autoFocus={false}
+            onChangeText={text => setSearchText(text)}
+          />
+          <Icon name="search" type="Feather" style={{color: '#1C6587'}} />
+        </View>
         {ordersLoading ? (
           <View
             style={{
@@ -45,7 +53,11 @@ const Orders = ({navigation}) => {
             <Spinner color="#1C6587" size={100} />
           </View>
         ) : (
-          <OrdersList navigation={navigation} orders={orders} />
+          <OrdersList
+            navigation={navigation}
+            orders={orders}
+            searchText={searchText}
+          />
         )}
       </Body>
     </Container>
@@ -211,25 +223,45 @@ const SearchBar = () => {
   );
 };
 
-const OrdersList = ({navigation, orders}) => {
+const OrdersList = ({navigation, orders, searchText}) => {
+  let ordersToDisplay = orders;
+  if (searchText !== '') {
+    ordersToDisplay = orders.filter(order =>
+      order.client_name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+  }
   return (
     <ScrollView style={styles.orderListContainer}>
-      {orders.map(order => {
-        return (
-          <OrderItem
-            orderID={order.id}
-            orderCode={order.code}
-            clientName={order.client_name}
-            orderDate={order.created_at}
-            status={{
-              order: order.payed,
-              shipping: order.shipped,
-            }}
-            navigation={navigation}
-            key={order.id}
-          />
-        );
-      })}
+      {ordersToDisplay.length > 0 ? (
+        ordersToDisplay.map((order, index) => {
+          return (
+            <OrderItem
+              orderID={order.id}
+              orderCode={order.code}
+              clientName={order.client_name}
+              orderDate={order.created_at}
+              status={{
+                order: order.payed,
+                shipping: order.shipped,
+              }}
+              navigation={navigation}
+              key={order.id}
+            />
+          );
+        })
+      ) : (
+        <Text
+          style={{
+            color: '#F8333C',
+            fontWeight: 'bold',
+            fontSize: 24,
+            textAlign: 'center',
+            padding: 20,
+          }}>
+          {' '}
+          Aucune commande ne corresponds a votre recherche
+        </Text>
+      )}
     </ScrollView>
   );
 };
