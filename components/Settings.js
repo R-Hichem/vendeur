@@ -14,26 +14,22 @@ const Settings = ({navigation}) => {
       <View style={styles.header}>
         <Text style={styles.headerText}> {user.name} </Text>
       </View>
-      <Body style={{width: '100%'}}>
-        <TouchableOpacity style={styles.homeListContainer}>
-          <Button
-            block
-            Primary
+      <Body>
+        <View style={styles.homeListContainer}>
+          <View
             style={{
               ...styles.orderItem,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'space-between',
               flexDirection: 'row',
-            }}
-            onPress={() => {
-              setLoading(true);
-              logout();
+              width: 350,
             }}>
             <Text style={{color: '#1C6587', fontWeight: 'bold'}}>
-              Deconnexion
+              Attribut :
             </Text>
-          </Button>
-        </TouchableOpacity>
+            <Text style={{color: '#1C6587'}}>Valeur</Text>
+          </View>
+        </View>
       </Body>
     </Container>
   );
