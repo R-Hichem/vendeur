@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
       <View style={styles.header}>
         <Text style={styles.headerText}> {user.name} </Text>
       </View>
-      <Body style={{width: '100%'}}>
+      <Body style={{width: '100%', paddingVertical: 50, paddingBottom: 100}}>
         <View style={styles.homeListContainer}>
           <HomeItem
             title="Commandes"
@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignContent: 'center',
     alignItems: 'center',
-    padding: 10,
     height: 160,
     width: 140,
   },

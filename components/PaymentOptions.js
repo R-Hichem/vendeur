@@ -22,7 +22,12 @@ const PaymentOptions = ({route, navigation}) => {
         <Text style={styles.headerText}>Options de paiement</Text>
       </View>
       <Content>
-        <Body style={{width: '100%'}}>
+        <Body
+          style={{
+            width: '100%',
+            height: '100%',
+            marginVertical: 100,
+          }}>
           <View style={styles.homeListContainer}>
             <HomeItem
               title="Code QR"
