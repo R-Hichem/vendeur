@@ -124,7 +124,7 @@ const MainScreen = ({navigation, order, orderID}) => {
   return (
     <Container style={{backgroundColor: '#F6F6F9'}}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Détaille de la commande</Text>
+        <Text style={styles.headerText}>Détails de la commande</Text>
       </View>
       <Content>
         <List>
